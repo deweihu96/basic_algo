@@ -1,10 +1,8 @@
-# JavaScript专题之函数组合
-
-## 需求
+## 1.需求
 
 我们需要写一个函数，输入 'kevin'，返回 'HELLO, KEVIN'。
 
-## 尝试
+## 2.尝试
 
 ```js
 var toUpperCase = function(x) { return x.toUpperCase(); };
@@ -19,7 +17,7 @@ greet('kevin');
 
 还好我们只有两个步骤，首先小写转大写，然后拼接字符串。如果有更多的操作，greet 函数里就需要更多的嵌套，类似于 `fn3(fn2(fn1(fn0(x))))`。
 
-## 优化
+## 3.优化
 
 试想我们写个 compose 函数：
 
@@ -52,7 +50,7 @@ compose(d, compose(c, compose(b, a)))
 compose(d, c, b, a)
 ```
 
-## compose
+## 4.compose
 
 我们直接抄袭 underscore 的 compose 函数的实现：
 
@@ -73,7 +71,7 @@ function compose() {
 
 在此之前，我们先了解一个概念叫做 pointfree。
 
-## pointfree
+## 5.pointfree
 
 pointfree 指的是函数无须提及将要操作的数据是什么样的。依然是以最初的需求为例：
 
@@ -346,11 +344,3 @@ var getIncompleteTaskSummaries = function(membername) {
         ))
 };
 ```
-
-## 专题系列
-
-JavaScript专题系列目录地址：[https://github.com/mqyqingfeng/Blog](https://github.com/mqyqingfeng/Blog)。
-
-JavaScript专题系列预计写二十篇左右，主要研究日常开发中一些功能点的实现，比如防抖、节流、去重、类型判断、拷贝、最值、扁平、柯里、递归、乱序、排序等，特点是研(chao)究(xi) underscore 和 jQuery 的实现方式。
-
-如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎 star，对作者也是一种鼓励。

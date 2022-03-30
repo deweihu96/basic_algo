@@ -1,10 +1,8 @@
-# JavaScript专题之递归
-
-## 定义
+## 1.定义
 
 程序调用自身的编程技巧称为递归(recursion)。
 
-## 阶乘
+## 2.阶乘
 
 以阶乘为例：
 
@@ -17,11 +15,7 @@ function factorial(n) {
 console.log(factorial(5)) // 5 * 4 * 3 * 2 * 1 = 120
 ```
 
-示意图(图片来自 [wwww.penjee.com](wwww.penjee.com))：
-
-![阶乘](https://github.com/mqyqingfeng/Blog/raw/master/Images/recursion/factorial.gif)
-
-## 斐波那契数列
+## 3.斐波那契数列
 
 在[《JavaScript专题之函数记忆》](https://github.com/mqyqingfeng/Blog/issues/46)中讲到过的斐波那契数列也使用了递归：
 
@@ -33,7 +27,7 @@ function fibonacci(n){
 console.log(fibonacci(5)) // 1 1 2 3 5
 ```
 
-## 递归条件
+## 4.递归条件
 
 从这两个例子中，我们可以看出：
 
@@ -46,7 +40,7 @@ console.log(fibonacci(5)) // 1 1 2 3 5
 
 了解这些特点可以帮助我们更好的编写递归函数。
 
-## 执行上下文栈
+## 5.执行上下文栈
 
 在[《JavaScript深入之执行上下文栈》](https://github.com/mqyqingfeng/Blog/issues/4)中，我们知道：
 
@@ -56,7 +50,7 @@ console.log(fibonacci(5)) // 1 1 2 3 5
 
 答案就是尾调用。
 
-## 尾调用
+## 6.尾调用
 
 尾调用，是指函数内部的最后一个动作是函数调用。该调用的返回值，直接返回给函数。
 
@@ -119,14 +113,14 @@ ECStack.pop();
 
 所以我们只用把阶乘函数改造成一个尾递归形式，就可以避免创建那么多的执行上下文。但是我们该怎么做呢？
 
-## 阶乘函数优化
+## 7.阶乘函数优化
 
 我们需要做的就是把所有用到的内部变量改写成函数的参数，以阶乘函数为例：
 
 ```js
 function factorial(n, res) {
     if (n == 1) return res;
-    return factorial2(n - 1, n * res)
+    return factorial(n - 1, n * res)
 }
 
 console.log(factorial(4, 1)) // 24
@@ -142,7 +136,7 @@ var newFactorial = curry(factorial, _, 1)
 newFactorial(5) // 24
 ```
 
-## 应用
+## 8.应用
 
 如果你看过 [JavaScript 专题系列](https://github.com/mqyqingfeng/Blog)的文章，你会发现递归有着很多的应用。
 
@@ -289,11 +283,3 @@ function curry(fn, args) {
 ## 写在最后
 
 递归的内容远不止这些，比如还有汉诺塔、二叉树遍历等递归场景，本篇就不过多展开，真希望未来能写个算法系列。
-
-## 专题系列
-
-JavaScript专题系列目录地址：[https://github.com/mqyqingfeng/Blog](https://github.com/mqyqingfeng/Blog)。
-
-JavaScript专题系列预计写二十篇左右，主要研究日常开发中一些功能点的实现，比如防抖、节流、去重、类型判断、拷贝、最值、扁平、柯里、递归、乱序、排序等，特点是研(chao)究(xi) underscore 和 jQuery 的实现方式。
-
-如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎 star，对作者也是一种鼓励。

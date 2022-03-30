@@ -1,12 +1,10 @@
-# JavaScript专题之乱序
-
-## 乱序
+## 1.乱序
 
 乱序的意思就是将数组打乱。
 
 嗯，没有了，直接看代码吧。
 
-## Math.random
+## 2.Math.random
 
 一个经常会遇见的写法是使用 Math.random()：
 
@@ -28,13 +26,9 @@ console.log(values)
 var times = [0, 0, 0, 0, 0];
 
 for (var i = 0; i < 100000; i++) {
-    
     let arr = [1, 2, 3, 4, 5];
-    
     arr.sort(() => Math.random() - 0.5);
-    
     times[arr[4]-1]++;
-
 }
 
 console.log(times)
@@ -52,11 +46,9 @@ console.log(times)
 
 我们会发现，最后一个元素为 5 的次数远远低于为 1 的次数，所以这个方案是有问题的。
 
-可是我明明感觉这个方法还不错呐？初见时还有点惊艳的感觉，为什么会有问题呢？
+可是我明明感觉这个方法还不错呐？初见时还有点惊艳的感觉，为什么会有问题呢？是的！我很好奇！
 
-是的！我很好奇！
-
-## 插入排序
+## 3.插入排序
 
 如果要追究这个问题所在，就必须了解 sort 函数的原理，然而 ECMAScript 只规定了效果，没有规定实现的方式，所以不同浏览器实现的方式还不一样。
 
@@ -94,7 +86,7 @@ function InsertionSort(a, from, to) {
 
 ![插入排序](https://github.com/mqyqingfeng/Blog/raw/master/Images/sort/insertion.gif)
 
-## 具体分析
+## 4.具体分析
 
 明白了插入排序的原理，我们来具体分析下 [1, 2, 3] 这个数组乱序的结果。
 
@@ -193,11 +185,9 @@ console.log(res)
 
 那么如何实现真正的乱序呢？而这就要提到经典的 Fisher–Yates 算法。
 
-## Fisher–Yates
+## 5.Fisher–Yates
 
-为什么叫 Fisher–Yates 呢？ 因为这个算法是由 Ronald Fisher 和 Frank Yates 首次提出的。
-
-话不多说，我们直接看 JavaScript 的实现：
+为什么叫 Fisher–Yates 呢？ 因为这个算法是由 Ronald Fisher 和 Frank Yates 首次提出的。话不多说，我们直接看 JavaScript 的实现：
 
 ```js
 function shuffle(a) {
@@ -252,11 +242,3 @@ console.log(res)
 ![Fisher–Yates 效果演示](https://github.com/mqyqingfeng/Blog/raw/master/Images/shuffle/fisher-yates.png)
 
 真正的实现了乱序的效果！
-
-## 专题系列
-
-JavaScript专题系列目录地址：[https://github.com/mqyqingfeng/Blog](https://github.com/mqyqingfeng/Blog)。
-
-JavaScript专题系列预计写二十篇左右，主要研究日常开发中一些功能点的实现，比如防抖、节流、去重、类型判断、拷贝、最值、扁平、柯里、递归、乱序、排序等，特点是研(chao)究(xi) underscore 和 jQuery 的实现方式。
-
-如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎 star，对作者也是一种鼓励。

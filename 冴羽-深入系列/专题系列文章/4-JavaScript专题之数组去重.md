@@ -1,10 +1,4 @@
-# JavaScript专题之数组去重
-
-## 前言
-
-数组去重方法老生常谈，既然是常谈，我也来谈谈。
-
-## 双层循环
+## 1.双层循环
 
 也许我们首先想到的是使用 indexOf 来循环判断一遍，但在这个方法之前，让我们先看看最原始的方法：
 
@@ -35,7 +29,7 @@ console.log(unique(array)); // [1, "1"]
 
 看起来很简单吧，之所以要讲一讲这个方法，是因为——————兼容性好！
 
-## indexOf
+## 2.indexOf
 
 我们可以用 indexOf 简化内层的循环：
 
@@ -56,7 +50,7 @@ function unique(array) {
 console.log(unique(array));
 ```
 
-## 排序后去重
+## 3.排序后去重
 
 试想我们先将要去重的数组使用 sort 方法排序后，相同的值就会被排在一起，然后我们就可以只判断当前元素与上一个元素是否相同，相同就说明重复，不相同就添加进 res，让我们写个 demo：
 
@@ -68,7 +62,7 @@ function unique(array) {
     var sortedArray = array.concat().sort();
     var seen;
     for (var i = 0, len = sortedArray.length; i < len; i++) {
-        // 如果是第一个元素或者相邻的元素不相同
+        // 如果是第一个元素或者相邻的元素不相同 !0为true;
         if (!i || seen !== sortedArray[i]) {
             res.push(sortedArray[i])
         }
@@ -82,7 +76,7 @@ console.log(unique(array));
 
 如果我们对一个已经排好序的数组去重，这种方法效率肯定高于使用 indexOf。
 
-## unique API
+## 4.unique API
 
 知道了这两种方法后，我们可以去尝试写一个名为 unique 的工具函数，我们根据一个参数 isSorted 判断传入的数组是否是已排序的，如果为 true，我们就判断相邻元素是否相同，如果为 false，我们就使用 indexOf 进行判断
 
@@ -114,7 +108,7 @@ console.log(unique(array1)); // [1, 2, "1"]
 console.log(unique(array2, true)); // [1, "1", 2]
 ```
 
-## 优化
+## 5.优化
 
 尽管 unqique 已经可以试下去重功能，但是为了让这个 API 更加强大，我们来考虑一个需求：
 
@@ -139,14 +133,12 @@ function unique(array, isSorted, iteratee) {
                 res.push(value)
             }
             seen = value;
-        }
-        else if (iteratee) {
+        }else if (iteratee) {
             if (seen.indexOf(computed) === -1) {
                 seen.push(computed);
                 res.push(value);
             }
-        }
-        else if (res.indexOf(value) === -1) {
+        }else if (res.indexOf(value) === -1) {
             res.push(value);
         }        
     }
@@ -168,7 +160,7 @@ iteratee：传入一个函数，可以对每个元素进行重新的计算，然
 
 至此，我们已经仿照着 underscore 的思路写了一个 unique 函数，具体可以查看 [Github](https://github.com/jashkenas/underscore/blob/master/underscore.js#L562)。
 
-## filter
+## 6.filter
 
 ES5 提供了 filter 方法，我们可以用来简化外层循环：
 
@@ -201,7 +193,7 @@ function unique(array) {
 console.log(unique(array));
 ```
 
-## Object 键值对
+## 7.Object 键值对
 
 去重的方法众多，尽管我们已经跟着 underscore 写了一个 unqiue API，但是让我们看看其他的方法拓展下视野：
 
@@ -220,7 +212,7 @@ function unique(array) {
 console.log(unique(array)); // [1, 2]
 ```
 
-我们可以发现，是有问题的，因为 1 和 '1' 是不同的，但是这种方法会判断为同一个值，这是因为对象的键值只能是字符串，所以我们可以使用 `typeof item + item` 拼成字符串作为 key 值来避免这个问题：
+我们可以发现，是有问题的，因为 1 和 '1' 是不同的，但是这种方法会判断为同一个值，这是因为对象的键值只能是字符串，**所以我们可以使用 `typeof item + item` 拼成字符串作为 key 值来避免这个问题：**
 
 ```js
 var array = [1, 2, 1, 1, '1'];
@@ -251,7 +243,7 @@ function unique(array) {
 console.log(unique(array)); // [{value: 1}, {value: 2}]
 ```
 
-## ES6
+## 8.ES6
 
 随着 ES6 的到来，去重的方法又有了进展，比如我们可以使用 Set 和 Map 数据结构，以 Set 为例，ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
 
@@ -281,6 +273,8 @@ function unique(array) {
 var unique = (a) => [...new Set(a)]
 ```
 
+------
+
 此外，如果用 Map 的话：
 
 ```js
@@ -290,11 +284,11 @@ function unique (arr) {
 }
 ```
 
-## JavaScript 的进化
+## 9.JavaScript 的进化
 
 我们可以看到，去重方法从原始的 14 行代码到 ES6 的 1 行代码，其实也说明了 JavaScript 这门语言在不停的进步，相信以后的开发也会越来越高效。
 
-## 特殊类型比较
+## 10.特殊类型比较
 
 去重的方法就到此结束了，然而要去重的元素类型可能是多种多样，除了例子中简单的 1 和 '1' 之外，其实还有 null、undefined、NaN、对象等，那么对于这些元素，之前的这些方法的去重结果又是怎样呢？
 
@@ -397,11 +391,3 @@ Set 认为尽管 NaN === NaN 为 false，但是这两个元素是重复的。
 ## 写在最后
 
 虽然去重的结果有所不同，但更重要的是让我们知道在合适的场景要选择合适的方法。
-
-## 专题系列
-
-JavaScript专题系列目录地址：[https://github.com/mqyqingfeng/Blog](https://github.com/mqyqingfeng/Blog)。
-
-JavaScript专题系列预计写二十篇左右，主要研究日常开发中一些功能点的实现，比如防抖、节流、去重、类型判断、拷贝、最值、扁平、柯里、递归、乱序、排序等，特点是研(chao)究(xi) underscore 和 jQuery 的实现方式。
-
-如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎 star，对作者也是一种鼓励。

@@ -1,10 +1,6 @@
-# JavaScript 专题之函数记忆
+## 1.定义
 
-## 定义
-
-函数记忆是指将上次的计算结果缓存起来，当下次调用时，如果遇到相同的参数，就直接返回缓存中的数据。
-
-举个例子：
+函数记忆是指将上次的计算结果缓存起来，当下次调用时，如果遇到相同的参数，就直接返回缓存中的数据。举个例子：
 
 ```js
 function add(a, b) {
@@ -18,11 +14,9 @@ memoizedAdd(1, 2) // 3
 memoizedAdd(1, 2) // 相同的参数，第二次调用时，从缓存中取出数据，而非重新计算一次
 ```
 
-## 原理
-
 实现这样一个 memorize 函数很简单，原理上只用把参数和对应的结果数据存到一个对象中，调用时，判断参数对应的数据是否存在，存在就返回对应的结果数据。
 
-## 第一版
+## 1.第一版
 
 我们来写一版：
 
@@ -34,8 +28,9 @@ function memoize(f) {
         var key = arguments.length + Array.prototype.join.call(arguments, ",");
         if (key in cache) {
             return cache[key]
+        }else {
+            return cache[key] = f.apply(this, arguments)
         }
-        else return cache[key] = f.apply(this, arguments)
     }
 }
 ```
@@ -64,7 +59,7 @@ console.timeEnd('not use memorize')
 
 在 Chrome 中，使用 memorize 大约耗时 60ms，如果我们不使用函数记忆，大约耗时 1.3 ms 左右。
 
-## 注意
+## 3.注意
 
 什么，我们使用了看似高大上的函数记忆，结果却更加耗时，这个例子近乎有 60 倍呢！
 
@@ -72,7 +67,7 @@ console.timeEnd('not use memorize')
 
 需要注意的是，函数记忆只是一种编程技巧，本质上是牺牲算法的空间复杂度以换取更优的时间复杂度，在客户端 JavaScript 中代码的执行时间复杂度往往成为瓶颈，因此在大多数场景下，这种牺牲空间换取时间的做法以提升程序执行效率的做法是非常可取的。
 
-## 第二版
+## 4.第二版
 
 因为第一版使用了 join 方法，我们很容易想到当参数是对象的时候，就会自动调用 toString 方法转换成 `[Object object]`，再拼接字符串作为 key 值。我们写个 demo 验证一下这个问题：
 
@@ -132,7 +127,7 @@ console.log(memoizedAdd(1, 2, 4)) // 7
 
 如果使用 JSON.stringify，参数是对象的问题也可以得到解决，因为存储的是对象序列化后的字符串。
 
-## 适用场景
+## 5.适用场景
 
 我们以斐波那契数列为例：
 
@@ -206,11 +201,3 @@ console.log(count) // 12
 ## 多说一句
 
 也许你会觉得在日常开发中又用不到 fibonacci，这个例子感觉实用价值不高呐，其实，这个例子是用来表明一种使用的场景，也就是如果需要大量重复的计算，或者大量计算又依赖于之前的结果，便可以考虑使用函数记忆。而这种场景，当你遇到的时候，你就会知道的。
-
-## 专题系列
-
-JavaScript专题系列目录地址：[https://github.com/mqyqingfeng/Blog](https://github.com/mqyqingfeng/Blog)。
-
-JavaScript专题系列预计写二十篇左右，主要研究日常开发中一些功能点的实现，比如防抖、节流、去重、类型判断、拷贝、最值、扁平、柯里、递归、乱序、排序等，特点是研(chao)究(xi) underscore 和 jQuery 的实现方式。
-
-如果有错误或者不严谨的地方，请务必给予指正，十分感谢。如果喜欢或者有所启发，欢迎 star，对作者也是一种鼓励。
