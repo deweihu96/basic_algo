@@ -1,12 +1,4 @@
----
-title: Prop
-type: guide
-order: 102
----
-
-> 该页面假设你已经阅读过了[组件基础](components.html)。如果你还对组件不太了解，推荐你先阅读它。
-
-## Prop 的大小写 (camelCase vs kebab-case)
+## 1.Prop 的大小写 (camelCase vs kebab-case)
 
 HTML 中的 attribute 名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。这意味着当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名：
 
@@ -25,7 +17,7 @@ Vue.component('blog-post', {
 
 重申一次，如果你使用字符串模板，那么这个限制就不存在了。
 
-## Prop 类型
+## 2.Prop 类型
 
 到这里，我们只看到了以字符串数组形式列出的 prop：
 
@@ -47,9 +39,9 @@ props: {
 }
 ```
 
-这不仅为你的组件提供了文档，还会在它们遇到错误的类型时从浏览器的 JavaScript 控制台提示用户。你会在这个页面接下来的部分看到[类型检查和其它 prop 验证](#Prop-验证)。
+这不仅为你的组件提供了文档，还会在它们遇到错误的类型时从浏览器的 JavaScript 控制台提示用户。
 
-## 传递静态或动态 Prop
+## 3.传递静态或动态 Prop
 
 像这样，你已经知道了可以像这样给 prop 传入一个静态的值：
 
@@ -64,9 +56,7 @@ props: {
 <blog-post v-bind:title="post.title"></blog-post>
 
 <!-- 动态赋予一个复杂表达式的值 -->
-<blog-post
-  v-bind:title="post.title + ' by ' + post.author.name"
-></blog-post>
+<blog-post v-bind:title="post.title + ' by ' + post.author.name"></blog-post>
 ```
 
 在上述两个示例中，我们传入的值都是字符串类型的，但实际上*任何*类型的值都可以传给一个 prop。
@@ -149,7 +139,7 @@ post: {
 ></blog-post>
 ```
 
-## 单向数据流
+## 4.单向数据流
 
 所有的 prop 都使得其父子 prop 之间形成了一个**单向下行绑定**：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。
 
@@ -160,28 +150,28 @@ post: {
 1. **这个 prop 用来传递一个初始值；这个子组件接下来希望将其作为一个本地的 prop 数据来使用。**在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值：
 
   ``` js
-  props: ['initialCounter'],
-  data: function () {
-    return {
-      counter: this.initialCounter
-    }
+props: ['initialCounter'],
+data: function () {
+  return {
+    counter: this.initialCounter
   }
+}
   ```
 
 2. **这个 prop 以一种原始的值传入且需要进行转换。**在这种情况下，最好使用这个 prop 的值来定义一个计算属性：
 
   ``` js
-  props: ['size'],
-  computed: {
-    normalizedSize: function () {
-      return this.size.trim().toLowerCase()
-    }
+props: ['size'],
+computed: {
+  normalizedSize: function () {
+    return this.size.trim().toLowerCase()
   }
+}
   ```
 
-<p class="tip">注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身**将会**影响到父组件的状态。</p>
+> 注意在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身**将会**影响到父组件的状态
 
-## Prop 验证
+## 5.Prop 验证
 
 我们可以为组件的 prop 指定验证要求，例如你知道的这些类型。如果有一个需求没有被满足，则 Vue 会在浏览器控制台中警告你。这在开发一个会被别人用到的组件时尤其有帮助。
 
@@ -225,7 +215,7 @@ Vue.component('my-component', {
 
 当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。
 
-<p class="tip">注意那些 prop 会在一个组件实例创建**之前**进行验证，所以实例的 property (如 `data`、`computed` 等) 在 `default` 或 `validator` 函数中是不可用的。</p>
+> 注意那些 prop 会在一个组件实例创建**之前**进行验证，所以实例的 property (如 `data`、`computed` 等) 在 `default` 或 `validator` 函数中是不可用的。
 
 ### 类型检查
 
@@ -261,7 +251,7 @@ Vue.component('blog-post', {
 
 来验证 `author` prop 的值是否是通过 `new Person` 创建的。
 
-## 非 Prop 的 Attribute
+## 6.非 Prop 的 Attribute
 
 一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute。
 
@@ -338,7 +328,7 @@ Vue.component('base-input', {
 })
 ```
 
-<p class="tip">注意 `inheritAttrs: false` 选项**不会**影响 `style` 和 `class` 的绑定。</p>
+> 注意 `inheritAttrs: false` 选项**不会**影响 `style` 和 `class` 的绑定。
 
 这个模式允许你在使用基础组件的时候更像是使用原始的 HTML 元素，而不会担心哪个元素是真正的根元素：
 
