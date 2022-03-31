@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson 18</title>
+    <script src="./vue@next.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // 父组件监听 @handleClick 自定义事件
+    const app = Vue.createApp({
+        data() {
+            return {
+                count: 1
+            }
+        },
+        methods: {
+            handleAddOne(param) {
+                this.count += param;
+            }
+        },
+        template: `
+      <counter :count="count" @handle-click="handleAddOne"/>
+    `
+    });
+
+    app.component('counter', {
+        props: ['count'],
+        // 如果页面传递的方法过多，放到这里可以查看
+        emits: ["handleClick"],
+        methods: {
+            handleClick() {
+                // 也可以直接是计算好，再传值过去
+                this.$emit('handleClick', 2);
+            }
+        },
+        template: `
+      <div @click="handleClick">{{count}}</div>
+    `
+    });
+
+    const vm = app.mount('#root');
+</script>
+
+</html>

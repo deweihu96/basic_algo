@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson 7</title>
+    <script src="./vue@next.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // {{}} 插值表达式
+    // v-html，v-bind(:)，v-on(@), 动态参数，修饰符
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: "hello world",
+                show: false,
+                name: 'title',
+                event: "click"
+            }
+        },
+        methods: {
+            handleClick() {
+                alert('click')
+            }
+        },
+        template: `
+        <div :title="message">{{Math.max(1,2)}}</div>
+        <div :[name]="message" @[event]="handleClick">{{message}}</div>
+        <div v-once>{{message}}</div>
+        <form action="https://www.baidu.com" @click.prevent="handleClick">
+          <button type="submit">提交</button>
+        </form>
+    `
+    });
+    const vm = app.mount('#root');
+</script>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 28</title>
+  <script src="./vue@next.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // mixin 混入
+  // 组件 data, methods 优先级高于 mixin data, methods 优先级
+  // 生命周期函数，先执行 mixin 里面的，再执行组件里面的
+  // 自定义的属性，组件种的属性优先级高于 mixin 属性的优先级
+  const myMixin = {
+    number: 1,
+    data() {
+      return {
+        number: 2,
+        count: 223
+      }
+    },
+    created() {
+      console.log("myMixin")
+    }
+  }
+
+  const app = Vue.createApp({
+    mixins: [myMixin],
+    number: 3,  //自定义属性 this.$options.number
+    data() {
+      return {
+        number: 3,
+        count: 223
+      }
+    },
+    template: `
+      <div>
+        <div>{{number}}</div>
+        <div>{{this.$options.number}}</div>
+      </div>
+    `
+  });
+
+  // 对自定义属性合并的策略，mixinVal 和 appValue;之前是默认使用appValue的
+  app.config.optionMergeStrategies.number = (mixinVal, appValue) => {
+    return mixinVal || appValue;
+  }
+  //  全局的mixin无须每个页面的注入，一般不推荐使用
+  app.mixin({
+    data() {
+      return {
+        number: 2,
+        count: 223
+      }
+    },
+    created() {
+      console.log("app.mixin")
+    }
+  })
+
+  const vm = app.mount('#root');
+</script>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson 20</title>
+    <script src="./vue@next.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // 作用域插槽，可以把子组件的数据传到父组件上来 {item} 结构的语法
+    const app = Vue.createApp({
+        template: `
+      <list v-slot="{item}">
+        <div>{{item}}</div>  // 这块就是传递给子组件的slot
+      </list>
+    `
+    });
+
+    app.component('list', {
+        data() {
+            return {
+                list: [1, 2, 3]
+            }
+        },
+        template: `
+      <div>
+        <slot v-for="item in list" :item="item" />
+      </div>
+    `
+    });
+
+    const vm = app.mount('#root');
+</script>
+
+</html>

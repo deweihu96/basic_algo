@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson 17</title>
+    <script src="./vue@next.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // Non-prop 属性  父组件向子组件传值，如果子组件不接收，那么就会把传值数据放到最外层的div上；一般用于父组件给子组件传递样式
+    // 设置inheritAttrs: false,会关闭显示
+    const app = Vue.createApp({
+        template: `
+      <div>
+        <counter msg="hello" msg1="hello1" />
+        <counter style="color:red" msg="hello" msg1="hello1" />
+      </div>
+    `
+    });
+
+    app.component('counter', {
+        // inheritAttrs: false,
+        mounted() {
+            console.log(this.$attrs.msg);
+        },
+        template: `
+      <div :msg="$attrs.msg">Counter</div>
+      <div v-bind="$attrs">Counter {{$attrs.msg}}</div>
+      <div :msg1="$attrs.msg1">Counter</div>
+    `
+    });
+
+    const vm = app.mount('#root');
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesson 12</title>
+    <script src="./vue@next.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    // event, $event
+    // 事件修饰符：stop, prevent, capture, self, once, passive
+    // 按键修饰符：enter, tab, delete, esc, up, down, left, right
+    // 鼠标修饰符：left, right, middle
+    // 精确修饰符：exact
+    const app = Vue.createApp({
+        data() {
+            return {
+                count: 0
+            }
+        },
+
+        methods: {
+            handleClick(event) {
+                console.log(event)
+                console.log(event.target)
+            },
+            handleClickEvent(num, event) {
+                console.log(event)
+                console.log(event.target)
+            },
+            // 可以同事执行两个方法
+            handleClick1() {
+                alert("1")
+            },
+            handleClick2() {
+                alert("2")
+            },
+            handleClickout() {
+                alert("out")
+            },
+            handleClickinner() {
+                alert("inner")
+            },
+        },
+        template: `
+      <div>
+        <div @click="count+=1">{{count}}</div>
+        <div @click.ctrl.exact="handleClick">123</div>
+        <div @click="handleClick">{{count}}</div>
+        <div @click="handleClickEvent(num,$event)">{{count}}</div>
+        <div @click="handleClick1(),handleClick2()">{{count}}</div>
+        <div @click="handleClickout" style="background:red">
+          jojojo
+          <button @click.stop="handleClickinner">button</button>
+        </div>
+        <div @click.self="handleClickout" style="background:red;margin-top:20px">
+          <span>jojojo123</span>
+          <button @click="handleClickinner">button</button>
+        </div>
+      </div>
+    `
+    });
+
+    const vm = app.mount('#root');
+</script>
+
+</html>
