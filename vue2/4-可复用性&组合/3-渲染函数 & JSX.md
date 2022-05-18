@@ -1,9 +1,3 @@
----
-title: 渲染函数 & JSX
-type: guide
-order: 303
----
-
 ## 基础
 
 Vue 推荐在绝大多数情况下使用模板来创建你的 HTML。然而在一些场景中，你真的需要 JavaScript 的完全编程的能力。这时你可以用**渲染函数**，它比模板更接近编译器。
@@ -27,6 +21,7 @@ Vue 推荐在绝大多数情况下使用模板来创建你的 HTML。然而在�
 当开始写一个只能通过 `level` prop 动态生成标题 (heading) 的组件时，你可能很快想到这样实现：
 
 ``` html
+// 标题的h标签不一样
 <script type="text/x-template" id="anchored-heading-template">
   <h1 v-if="level === 1">
     <slot></slot>
@@ -100,7 +95,7 @@ Vue.component('anchored-heading', {
 
 上述 HTML 对应的 DOM 节点树如下图所示：
 
-![DOM 树可视化](/images/dom-tree.png)
+<img src="https://interview-aliyun.oss-cn-beijing.aliyuncs.com/myBlog/dom-tree.png" alt="DOM 树可视化" style="zoom: 50%;" />
 
 每个元素都是一个节点。每段文字也是一个节点。甚至注释也都是节点。一个节点就是页面的一个部分。就像家谱树一样，每个节点都可以有孩子节点 (也就是说每个部分可以包含其它的一些部分)。
 
@@ -138,8 +133,7 @@ return createElement('h1', this.blogTitle)
 // @returns {VNode}
 createElement(
   // {String | Object | Function}
-  // 一个 HTML 标签名、组件选项对象，或者
-  // resolve 了上述任何一种的一个 async 函数。必填项。
+  // 一个 HTML 标签名、组件选项对象，或者resolve 了上述任何一种的一个 async 函数。必填项。
   'div',
 
   // {Object}
@@ -149,8 +143,7 @@ createElement(
   },
 
   // {String | Array}
-  // 子级虚拟节点 (VNodes)，由 `createElement()` 构建而成，
-  // 也可以使用字符串来生成“文本虚拟节点”。可选。
+  // 子级虚拟节点 (VNodes)，由 `createElement()` 构建而成，也可以使用字符串来生成“文本虚拟节点”。可选。
   [
     '先写一些文字',
     createElement('h1', '一则头条'),
@@ -169,43 +162,46 @@ createElement(
 
 ``` js
 {
-  // 与 `v-bind:class` 的 API 相同，
-  // 接受一个字符串、对象或字符串和对象组成的数组
+  // 与 `v-bind:class` 的 API 相同，接受一个字符串、对象或字符串和对象组成的数组
   'class': {
     foo: true,
     bar: false
   },
-  // 与 `v-bind:style` 的 API 相同，
-  // 接受一个字符串、对象，或对象组成的数组
+    
+  // 与 `v-bind:style` 的 API 相同，接受一个字符串、对象，或对象组成的数组
   style: {
     color: 'red',
     fontSize: '14px'
   },
+    
   // 普通的 HTML attribute
   attrs: {
     id: 'foo'
   },
+    
   // 组件 prop
   props: {
     myProp: 'bar'
   },
+    
   // DOM property
   domProps: {
     innerHTML: 'baz'
   },
-  // 事件监听器在 `on` 内，
-  // 但不再支持如 `v-on:keyup.enter` 这样的修饰器。
+    
+  // 事件监听器在 `on` 内，但不再支持如 `v-on:keyup.enter` 这样的修饰器。
   // 需要在处理函数中手动检查 keyCode。
   on: {
     click: this.clickHandler
   },
+    
   // 仅用于组件，用于监听原生事件，而不是组件内部使用
   // `vm.$emit` 触发的事件。
   nativeOn: {
     click: this.nativeClickHandler
   },
-  // 自定义指令。注意，你无法对 `binding` 中的 `oldValue`
-  // 赋值，因为 Vue 已经自动为你进行了同步。
+    
+  // 自定义指令。注意，你无法对 `binding` 中的 `oldValue`赋值，因为 Vue 已经自动为你进行了同步。
   directives: [
     {
       name: 'my-custom-directive',
@@ -217,17 +213,21 @@ createElement(
       }
     }
   ],
-  // 作用域插槽的格式为
-  // { name: props => VNode | Array<VNode> }
+    
+  // 作用域插槽的格式为{ name: props => VNode | Array<VNode> }
   scopedSlots: {
     default: props => createElement('span', props.text)
   },
+    
   // 如果组件是其它组件的子组件，需为插槽指定名称
   slot: 'name-of-slot',
   // 其它特殊顶层 property
+    
   key: 'myKey',
+    
   ref: 'myRef',
   // 如果你在渲染函数中给多个元素都应用了相同的 ref 名，
+    
   // 那么 `$refs.myRef` 会变成一个数组。
   refInFor: true
 }
@@ -240,9 +240,7 @@ createElement(
 ``` js
 var getChildrenTextContent = function (children) {
   return children.map(function (node) {
-    return node.children
-      ? getChildrenTextContent(node.children)
-      : node.text
+    return node.children? getChildrenTextContent(node.children): node.text
   }).join('')
 }
 
@@ -358,11 +356,11 @@ render: function (createElement) {
 
 对于 `.passive`、`.capture` 和 `.once` 这些事件修饰符，Vue 提供了相应的前缀可以用于 `on`：
 
-| 修饰符 | 前缀 |
-| ------ | ------ |
-| `.passive` | `&` |
-| `.capture` | `!` |
-| `.once` | `~` |
+|                修饰符                 | 前缀 |
+| :-----------------------------------: | ---- |
+|              `.passive`               | `&`  |
+|              `.capture`               | `!`  |
+|                `.once`                | `~`  |
 | `.capture.once` 或<br>`.once.capture` | `~!` |
 
 例如：
@@ -377,28 +375,28 @@ on: {
 
 对于所有其它的修饰符，私有前缀都不是必须的，因为你可以在事件处理函数中使用事件方法：
 
-| 修饰符 | 处理函数中的等价操作 |
-| ------ | ------ |
-| `.stop` | `event.stopPropagation()` |
-| `.prevent` | `event.preventDefault()` |
-| `.self` | `if (event.target !== event.currentTarget) return` |
-| 按键：<br>`.enter`, `.13` | `if (event.keyCode !== 13) return` (对于别的按键修饰符来说，可将 `13` 改为[另一个按键码](http://keycode.info/)) |
-| 修饰键：<br>`.ctrl`, `.alt`, `.shift`, `.meta` | `if (!event.ctrlKey) return` (将 `ctrlKey` 分别修改为 `altKey`、`shiftKey` 或者 `metaKey`) |
+|                   修饰符                   | 处理函数中的等价操作                                         |
+| :----------------------------------------: | ------------------------------------------------------------ |
+|                  `.stop`                   | `event.stopPropagation()`                                    |
+|                 `.prevent`                 | `event.preventDefault()`                                     |
+|                  `.self`                   | `if (event.target !== event.currentTarget) return`           |
+|           按键：`.enter`, `.13`            | `if (event.keyCode !== 13) return` (对于别的按键修饰符来说，可将 `13` 改为[另一个按键码](http://keycode.info/)) |
+| 修饰键：`.ctrl`, `.alt`, `.shift`, `.meta` | `if (!event.ctrlKey) return` (将 `ctrlKey` 分别修改为 `altKey`、`shiftKey` 或者 `metaKey`) |
 
 这里是一个使用所有修饰符的例子：
 
 ```javascript
 on: {
   keyup: function (event) {
-    // 如果触发事件的元素不是事件绑定的元素
-    // 则返回
+    // 如果触发事件的元素不是事件绑定的元素则返回
     if (event.target !== event.currentTarget) return
-    // 如果按下去的不是 enter 键或者
-    // 没有同时按下 shift 键
-    // 则返回
+    
+    // 如果按下去的不是 enter 键或者没有同时按下 shift 键则返回
     if (!event.shiftKey || event.keyCode !== 13) return
+    
     // 阻止 事件冒泡
     event.stopPropagation()
+    
     // 阻止该元素默认的 keyup 事件
     event.preventDefault()
     // ...
@@ -507,8 +505,7 @@ Vue.component('my-component', {
   props: {
     // ...
   },
-  // 为了弥补缺少的实例
-  // 提供第二个参数作为上下文
+  // 为了弥补缺少的实例，提供第二个参数作为上下文
   render: function (createElement, context) {
     // ...
   }
@@ -516,7 +513,7 @@ Vue.component('my-component', {
 ```
 
 > 注意：在 2.3.0 之前的版本中，如果一个函数式组件想要接收 prop，则 `props` 选项是必须的。在 2.3.0 或以上的版本中，你可以省略 `props` 选项，所有组件上的 attribute 都会被自动隐式解析为 prop。
-> 
+>
 > 当使用函数式组件时，该引用将会是 HTMLElement，因为他们是无状态的也是无实例的。
 
 在 2.5.0 及以上版本中，如果你使用了[单文件组件](single-file-components.html)，那么基于模板的函数式组件可以这样声明：
@@ -634,4 +631,90 @@ Vue.component('my-functional-button', {
 
 你可能会有兴趣知道，Vue 的模板实际上被编译成了渲染函数。这是一个实现细节，通常不需要关心。但如果你想看看模板的功能具体是怎样被编译的，可能会发现会非常有意思。下面是一个使用 `Vue.compile` 来实时编译模板字符串的简单示例：
 
-<iframe src="https://codesandbox.io/embed/github/vuejs/vuejs.org/tree/master/src/v2/examples/vue-20-template-compilation?codemirror=1&hidedevtools=1&hidenavigation=1&theme=light&view=preview" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="vue-20-template-compilation" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Template Compilation</title>
+    <script src="https://unpkg.com/vue@2"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <textarea v-model="templateText" rows="7"></textarea>
+      <div v-if="typeof result === 'object'">
+        <label>render:</label>
+        <pre><code>{{ result.render }}</code></pre>
+        <label>staticRenderFns:</label>
+        <pre
+          v-for="(fn, index) in result.staticRenderFns"
+        ><code>_m({{ index }}): {{ fn }}</code></pre>
+        <pre
+          v-if="!result.staticRenderFns.length"
+        ><code>{{ result.staticRenderFns }}</code></pre>
+      </div>
+      <div v-else>
+        <label>Compilation Error:</label>
+        <pre><code>{{ result }}</code></pre>
+      </div>
+    </div>
+
+    <script type="text/template" id="defaultTemplateText">
+      <div>
+        <header>
+          <h1>I'm a template!</h1>
+        </header>
+        <p v-if="message">{{ message }}</p>
+        <p v-else>No message.</p>
+      </div>
+    </script>
+
+    <script>
+      new Vue({
+        el: "#app",
+
+        data: function() {
+          return {
+            templateText: document
+              .querySelector("#defaultTemplateText")
+              .innerHTML.trim()
+          };
+        },
+
+        computed: {
+          result: function() {
+            if (!this.templateText) {
+              return "Enter a valid template above";
+            }
+
+            try {
+              var result = Vue.compile(
+                this.templateText.replace(/\s{2,}/g, "")
+              );
+
+              return {
+                render: this.formatFunction(result.render),
+                staticRenderFns: result.staticRenderFns.map(this.formatFunction)
+              };
+            } catch (error) {
+              return error.message;
+            }
+          }
+        },
+
+        methods: {
+          formatFunction: function(fn) {
+            return fn.toString().replace(/(\{\n)(\S)/, "$1  $2");
+          }
+        }
+      });
+
+      console.error = function(error) {
+        throw new Error(error);
+      };
+    </script>
+  </body>
+</html>
+```
+
+![image-20220518103728317](https://interview-aliyun.oss-cn-beijing.aliyuncs.com/myBlog/image-20220518103728317.png)
