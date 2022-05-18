@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aae0be63-275e-4ca2-b734-c624a86fd170" name="变更" comment="修改vue文档transiton的过渡效果">
-      <change beforePath="$PROJECT_DIR$/vue2/3-过度动画/状态过度.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue2/3-过度动画/进入离开列表过度.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue2/src/v2/guide/mixins.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue2/src/v2/guide/plugins.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue2/src/v2/guide/render-function.md" beforeDir="false" afterPath="$PROJECT_DIR$/vue2/src/v2/guide/render-function.md" afterDir="false" />
+    <list default="true" id="aae0be63-275e-4ca2-b734-c624a86fd170" name="变更" comment="可复用性&amp;组合">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/高级程序设计/book-professional-javascript-for-web-developers" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +41,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652780371584</updated>
-      <workItem from="1652780375152" duration="730000" />
+      <workItem from="1652780375152" duration="1357000" />
     </task>
     <task id="LOCAL-00001" summary="修改vue文档transiton的过渡效果">
       <created>1652788821195</created>
@@ -53,7 +50,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652788821195</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="可复用性&amp;组合">
+      <created>1652842837659</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652842837659</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -72,6 +76,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改vue文档transiton的过渡效果" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改vue文档transiton的过渡效果" />
+    <MESSAGE value="可复用性&amp;组合" />
+    <option name="LAST_COMMIT_MESSAGE" value="可复用性&amp;组合" />
   </component>
 </project>
